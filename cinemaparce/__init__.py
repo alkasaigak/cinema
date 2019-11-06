@@ -19,7 +19,7 @@ class CinemaParser:
             self.extract_raw_content()
         print(self.content.text)
 
-    def get_film_list(self):
+    def get_films_list(self):
         '''Finding actual films'''
         if (self.content == None):
             self.extract_raw_content()
@@ -58,5 +58,4 @@ class CinemaParser:
         print(content.text)
         cinema = content.text[content.text.find('/cinemas/') + 29:].split('<')[0]
         return cinema
-
 
