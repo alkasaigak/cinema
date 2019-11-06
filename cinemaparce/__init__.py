@@ -8,15 +8,15 @@ class CinemaParser:
         '''Initing class'''
         self.city = city
         self.content = None
-
+    
     def extract_raw_content(self):
         '''Extracting raw content'''
         self.content = requests.get('https://' + self.city + '.subscity.ru')
-
+    
     def print_raw_content(self):
         '''Printing raw content'''
         print(self.content.text)
-
+    
     def get_film_list(self):
         '''Finding actual films'''
         text = BeautifulSoup(self.content.text, features='lxml')
@@ -39,7 +39,7 @@ class CinemaParser:
             if (len(ans) != 0):
                 return ans;
         return None
-
+    
     def get_film_nearest_session(self, name):
         '''Finding film nearest session'''
         page = self.get_film_page(name)
@@ -50,4 +50,4 @@ class CinemaParser:
         print(content.text)
         cinema = content.text[content.text.find("class= ' '") + 10:].split('<')[0]
         return cinema
-        
+
