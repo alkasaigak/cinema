@@ -16,13 +16,13 @@ class CinemaParser:
     def print_raw_content(self):
         '''Printing raw content'''
         if (self.content == None):
-            extract_raw_content()
+            self.extract_raw_content()
         print(self.content.text)
 
     def get_film_list(self):
         '''Finding actual films'''
         if (self.content == None):
-            extract_raw_content()
+            self.extract_raw_content()
         text = BeautifulSoup(self.content.text, features='lxml')
         unparsed_films = text.find_all('div', {'class': 'movie-title'})
         ans = []
@@ -38,7 +38,7 @@ class CinemaParser:
     def get_film_page(self, name):
         '''Finding a page of the film'''
         if (self.content == None):
-            extract_raw_content()
+            self.extract_raw_content()
         film_items = BeautifulSoup(self.content.text, features='lxml').find_all('div', {'class': 'movie-plate', 'attr-title': name})
         for item in film_items:
             ans = str(item)[str(item).find('http://m.kinopoisk.ru/movie/'):].split('"')[0]
@@ -49,7 +49,7 @@ class CinemaParser:
     def get_film_nearest_session(self, name):
         '''Finding film nearest session'''
         if (self.content == None):
-            extract_raw_content()
+            self.extract_raw_content()
         page = self.get_film_page(name)
         content = requests.get(page)
         link = (page + content.text[content.text.find('afisha/city/'):].split('"')[0])
@@ -59,6 +59,4 @@ class CinemaParser:
         cinema = content.text[content.text.find('/cinemas/') + 29:].split('<')[0]
         return cinema
 
-spb_parser = CinemaParser()
-spb_parser.extract_raw_content()
-print(spb_parser.get_film_nearest_session("Джокер"))
+
